@@ -231,6 +231,8 @@ def test_if_ref_id_exists(question):
             if not ref_id in question.trip.all_ids:
                 raise Exception ('Reference id does not exist in this excel from question: ', question.excel_id)
         if struc == 'REFERENCE' and not ('sonst' in question.texts[num] or 'und' in question.texts[num]):
+            if 'oder' in question.texts[num]:
+                raise Exception ("Reference with 'oder' are not possible, use 'und' or 'sonst' instead")
             ref_id = question.texts[num]
             if normal_screen_reference(ref_id) and not ref_id in question.trip.all_ids:
                 raise Exception ('Reference id does not exist in this excel from question: ', question.excel_id)

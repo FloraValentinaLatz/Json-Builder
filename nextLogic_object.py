@@ -1,5 +1,5 @@
 
-from helper import create_id, get_content_length, add_quotation_mark, get_one_id_higher, create_excel_id, create_condition_dict, nextLogic_patterns, get_number_and_type_for_value_option, is_keyInsight_reference
+from helper import create_id, get_content_length, add_quotation_mark, get_one_id_higher, create_excel_id, create_condition_dict, nextLogic_patterns, get_number_and_type_for_value_option, is_keyInsight_reference, normal_screen_reference
 import numpy as np
 from tests import test_if_any_scala_condition_is_missing, test_for_escape_option_at_question_loop, test_if_key_ref_exists
 import re
@@ -339,7 +339,10 @@ class NextLogic():
             if self.refQuestionId != 'null':
                 raise Exception ('refQuestionId der nextlogic is needed for %s but also for answer option with reference in question %s' % (self.type, self.question.excel_id))
             else:
-                self.refQuestionId = add_quotation_mark(create_id(self, self.texts[np.where(self.structure == 'ANSWER OPTIONS FROM REFERENCE (Single Choice)')][0]))
+                if normal_screen_reference(self.texts[np.where(self.structure == 'ANSWER OPTIONS FROM REFERENCE (Single Choice)')][0]):
+                    self.refQuestionId = add_quotation_mark(create_id(self, self.texts[np.where(self.structure == 'ANSWER OPTIONS FROM REFERENCE (Single Choice)')][0]))
+                else:
+                    raise Exception ('AnswerOptions from key insights does not work yet with the json builder at question: ', self.question.excel_id)
                    
 
     # ----------- CREATE JSON ----------------

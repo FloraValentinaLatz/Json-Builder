@@ -216,7 +216,7 @@ class Question:
         if 'SCALA' in self.structure:
             # declare numbers and texts 
             scala_text = self.texts[np.where(self.structure == 'SCALA')][0]
-            scala_pattern = "(\d+)\(([^)]+)\)-(\d+)\(([^)]+)\)"
+            scala_pattern = "\s*(\d+)\s*\(([^)]+)\)\s*-\s*(\d+)\s*\(([^)]+)\)\s*"
             matches = re.match(scala_pattern, scala_text)
             # get variables
             self.scala_min = int(matches.group(1))

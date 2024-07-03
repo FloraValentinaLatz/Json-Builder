@@ -142,9 +142,13 @@ class Trip:
                 index = np.where(self.df.iloc[:, i] == 'weiter mit Screen')[0]
                 next_question_excel_id = self.df.iloc[index, i+1].values[0]
                  # get correct columns for the next question -> get column where first entry is excel id
-                index_next_question = np.where(self.df.columns == next_question_excel_id)[0][0]
-                next_question_structure = self.df.iloc[:, index_next_question]
-                next_question_texts = self.df.iloc[:, index_next_question+1]
+                if 'wenn' in next_question_excel_id:
+                      next_question_structure = 'undefined because of multiple screens'
+                      next_question_texts = 'undefined because of multiple screens'
+                else: 
+                  index_next_question = np.where(self.df.columns == next_question_excel_id)[0][0]
+                  next_question_structure = self.df.iloc[:, index_next_question]
+                  next_question_texts = self.df.iloc[:, index_next_question+1]
             else:
                 next_question_structure = self.df.iloc[:, i+3]
                 next_question_texts = self.df.iloc[:, i+4]
